@@ -8,16 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-let repositories = [{
-  "id": "fbce6a43-3998-4188-9cd3-d52fa44ccaca",
-  "title": "Otavio Augusto",
-  "url": "http://github.com/...",
-  "techs": [
-      "Node.js",
-      "React"
-  ],
-  "likes": 0
-}];
+let repositories = [];
 
 app.get("/repositories", (request, response) => {
 
