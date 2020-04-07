@@ -41,6 +41,10 @@ app.put("/repositories/:id", (request, response) => {
 
   const index = repositories.findIndex(data => data.id === id)
 
+  if(index < 0){
+    return response.status(400).send()
+  }
+
   title ? repositories[index].title = title : null
   url ? repositories[index].url = url : null
   techs ? repositories[index].techs = techs : null 
@@ -53,9 +57,15 @@ app.put("/repositories/:id", (request, response) => {
 app.delete("/repositories/:id", (req, res) => {
   const { id } = req.params;
   
-  repositories = repositories.filter(data => data.id !== id);
+  const index = repositories.findIndex(data => data.id === id);
 
-  return res.status(200).send()
+  if(index < 0){
+    return res.status(400).send()
+  }
+
+  repositories.splice(index, 1)
+
+  return res.status(204).send()
 
 });
 
@@ -63,6 +73,10 @@ app.post("/repositories/:id/like", (request, response) => {
     const { id } = request.params;
 
     const index = repositories.findIndex(data => data.id === id);
+
+    if(index < 0){
+      return response.status(400).send()
+    }
 
     repositories[index].likes = repositories[index].likes+1;
 
